@@ -103,3 +103,10 @@ Puis
 - Réalisez le build avec : `npm run build`
 
 Le déploiement Front est alors achevé
+
+
+La commande pour passer root en SSH est :
+```shell
+    su
+```
+Puis indiquer votre mot de passe
