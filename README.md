@@ -35,7 +35,7 @@ Par exemple pour un utilisateur root sans mot de passe avec une base de donnée 
 ### Lancer le projet
 
 
-** Afin de lancer le projet en local, commentez la ligne 8 ( base ) du ficher vite.config.js ( celle ci doit être décommentée pour la mise en production" ou rempli à l'aide de votre nom principal )** 
+** Afin de lancer le projet en local, commentez la ligne 8 ( base ) du ficher vite.config.js ( celle ci doit être décommentée pour la mise en production" ) en cas de build en local, récupérez le fichier ou son contenu : .env.production du dossier client ** 
 
 1. Exécuter le serveur et le client dans 2 terminaux différents
 ```shell
