@@ -8,7 +8,7 @@ export default ({ mode }) => {
     base: `${process.env.VITE_BASE_URL === '/' ?'' :process.env.VITE_BASE_URL}`,
     plugins: [react()],
     build: {
-      outDir: 'webpub'
+      outDir: './../webpub'
     }
   })
 }
