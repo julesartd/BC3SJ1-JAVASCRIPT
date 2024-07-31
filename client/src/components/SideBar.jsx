@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import './../styles/sidebar.css'
+const base = import.meta.env.VITE_BASE_URL || '/'
 
 const Sidebar = ({userT}) => {
     const [user, setUser] = useState(null);
 
     useEffect(() => {
-        fetch('/api/session', {
+        fetch(base+'api/session', {
             credentials: 'include'
         })
         .then(response => {
@@ -21,7 +22,7 @@ const Sidebar = ({userT}) => {
     }, [])
     useEffect(() => {
         console.log(userT)
-        fetch('/api/session', {
+        fetch(base+'api/session', {
             credentials: 'include'
         })
             .then(response => {
@@ -33,7 +34,7 @@ const Sidebar = ({userT}) => {
     }, [userT])
 
     const handleLogout = () => {
-        fetch('/api/logout', {
+        fetch(base+'api/logout', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

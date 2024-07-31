@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
+const base = import.meta.env.VITE_BASE_URL || '/'
 
 const BookDetails = () => {
     const { bookId } = useParams()
@@ -8,14 +9,14 @@ const BookDetails = () => {
     const [userRole, setUserRole] = useState('')
 
     useEffect(() => {
-        fetch(`/api/books/${bookId}`, {
+        fetch(`${base}api/books/${bookId}`, {
             credentials: 'include'
         })
             .then(response => response.json())
             .then(data => setBook(data[0]))
             .catch(error => console.error('Erreur:', error));
 
-        fetch('/api/users/user-role', {
+        fetch(base+'api/users/user-role', {
             credentials: 'include'
         })
             .then(response => response.json())

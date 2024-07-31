@@ -8,13 +8,14 @@ const Register = () => {
     const [password, setPassword] = useState('')
     const [error, setError] = useState('')
     const navigate = useNavigate()
+const base = import.meta.env.VITE_BASE_URL || '/'
 
     const handleSubmit = async (e) => {
         e.preventDefault()
         setError('')
 
         try {
-            const response = await fetch('/api/users/register', {
+            const response = await fetch(base+'api/users/register', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -78,7 +79,7 @@ const Register = () => {
                 <button type="submit">S'inscrire</button>
             </form>
             {error && <p>{error}</p>}
-            <p>Vous avez déjà un compte ? <a href="/login">Connectez-vous ici</a>.</p>
+            <p>Vous avez déjà un compte ? <a href={`${base}/login`}>Connectez-vous ici</a>.</p>
         </div>
     )
 }

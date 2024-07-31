@@ -6,15 +6,16 @@ const BookList = () => {
     const navigate = useNavigate()
     const [books, setBooks] = useState([])
     const [userRole, setUserRole] = useState('')
+    const base = import.meta.env.VITE_BASE_URL || '/'
 
     useEffect(() => {
-        fetch('/api/books', {
+        fetch(base+'api/books', {
             credentials: 'include'
         })
             .then(response => response.json())
             .then(data => setBooks(data))
             .catch(error => console.error('Erreur:', error))
-        fetch('/api/session', {
+        fetch(base+'api/session', {
             credentials: 'include'
         })
             .then(response => {
@@ -56,7 +57,7 @@ const BookList = () => {
                                 <td>{book.auteur}</td>
                                 <td>{book.date_publication}</td>
                                 <td>{book.statut}</td>
-                                <td><a href={`/book/${book.id}`}>Voir les détails</a></td>
+                                <td><a href={`${base}book/${book.id}`}>Voir les détails</a></td>
                             </tr>
                         ))}
                     </tbody>

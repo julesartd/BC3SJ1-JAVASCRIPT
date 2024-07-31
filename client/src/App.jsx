@@ -9,11 +9,13 @@ import Register from './components/Register.jsx'
 import Login from './components/Login.jsx'
 import DashBoard from './components/DashBoard.jsx'
 import './style.css'
+const base = import.meta.env.VITE_BASE_URL || '/'
+
 
 function App() {
     const [userT, setUserT] = useState(null)
     return (
-        <Router>
+        <Router basename={base === "/" ? "/" :`/${base}`}>
             <Routes>
                 <Route path="/" element={<Template userT={userT}><BookList /></Template>} />
                 <Route path="/register" element={<Template userT={userT} page="Inscription"><Register /></Template>} />

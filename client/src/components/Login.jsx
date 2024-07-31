@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+const base = import.meta.env.VITE_BASE_URL || '/'
 
 const Login = ({setUserT}) => {
     const [email, setEmail] = useState('')
@@ -12,7 +13,7 @@ const Login = ({setUserT}) => {
         setError('')
 
         try {
-            const response = await fetch('/api/users/login', {
+            const response = await fetch(base+'api/users/login', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -56,7 +57,7 @@ const Login = ({setUserT}) => {
                 <button type="submit">Se connecter</button>
             </form>
             {error && <p>{error}</p>}
-            <p>Vous n'avez pas de compte ? <a href="/register">S'inscrire</a></p>
+            <p>Vous n'avez pas de compte ? <a href={`${base}/register`}>S'inscrire</a></p>
         </div>
     )
 }

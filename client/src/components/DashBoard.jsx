@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react'
+const base = import.meta.env.VITE_BASE_URL || '/'
 
 const Dashboard = () => {
     const [statistics, setStatistics] = useState({ total_books: 0, total_users: 0 })
 
     useEffect(() => {
-        fetch('/api/statistics', {
+        fetch(base+'api/statistics', {
             credentials: 'include'
         })
             .then(response => response.status === 200 ?response.json() :(function(){throw "error"}()))

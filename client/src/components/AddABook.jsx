@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+const base = import.meta.env.VITE_BASE_URL || '/'
 
 const AddBook = () => {
     const [cover, setCover] = useState('')
@@ -25,7 +26,7 @@ const AddBook = () => {
         }
 
         try {
-            const response = await fetch('/api/books', {
+            const response = await fetch(base+'api/books', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'

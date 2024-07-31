@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
+const base = import.meta.env.VITE_BASE_URL || '/'
 
 const EditBook = () => {
     const { bookId } = useParams();
@@ -16,7 +17,7 @@ const EditBook = () => {
     const [success, setSuccess] = useState(false);
 
     useEffect(() => {
-        fetch(`/api/books/${bookId}`, {
+        fetch(`${base}api/books/${bookId}`, {
             credentials: 'include'
         })
             .then(response => response.json())
