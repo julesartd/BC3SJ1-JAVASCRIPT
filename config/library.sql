@@ -20,9 +20,9 @@ SET time_zone = "+00:00";
 --
 -- Base de données : `library`
 --
-CREATE DATABASE IF NOT EXISTS library;
-CREATE USER 'libr'@'%' IDENTIFIED BY 'NIEN97BF21OZEFJOZEO';
-GRANT ALL PRIVILEGES ON library.* TO 'libr'@'%' WITH GRANT OPTION;
+-- CREATE DATABASE IF NOT EXISTS library;
+-- CREATE USER 'libr'@'%' IDENTIFIED BY 'NIEN97BF21OZEFJOZEO';
+-- GRANT ALL PRIVILEGES ON library.* TO 'libr'@'%' WITH GRANT OPTION;
 USE library;
 -- --------------------------------------------------------
 
@@ -104,6 +104,21 @@ ALTER TABLE `livres`
 --
 ALTER TABLE `utilisateurs`
   MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+-- 
+
+CREATE TABLE `emprunts` (
+`id_emprunt` int NOT NULL AUTO_INCREMENT,
+`id_utilisateur` int NOT NULL,
+`id_livre` int NOT NULL,
+`date_emprunt` date NOT NULL,
+`date_retour_prevue` date NOT NULL,
+`date_retour_effective` date DEFAULT NULL,
+PRIMARY KEY (`id_emprunt`),
+FOREIGN KEY (`id_utilisateur`) REFERENCES `utilisateurs`(`id`) ON DELETE CASCADE,
+FOREIGN KEY (`id_livre`) REFERENCES `livres`(`id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
