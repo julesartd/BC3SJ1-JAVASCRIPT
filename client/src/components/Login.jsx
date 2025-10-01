@@ -31,6 +31,7 @@ const Login = ({setUserT}) => {
                 setError(data.message || 'Une erreur est survenue. Veuillez réessayer.')
             }
         } catch (err) {
+            console.error('Erreur lors de la connexion:', err)
             setError('Une erreur est survenue. Veuillez réessayer.')
         }
     }

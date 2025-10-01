@@ -7,6 +7,8 @@ const path = require('path')
 const cookieParser = require('cookie-parser')
 const jwt = require('jsonwebtoken')
 const db = require('./services/database')
+require('./cron/empruntReminder');
+
 
 const JWT_SECRET = "HelloThereImObiWan"
 function authenticateToken(req, res, next) {
@@ -20,7 +22,8 @@ function authenticateToken(req, res, next) {
     })
 }
 const corsOptions = {
-    origin: 'https://exam.andragogy.fr',
+    // origin: 'https://exam.andragogy.fr',
+    origin: 'http://localhost:5173',
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
     credentials: true,
     optionsSuccessStatus: 204

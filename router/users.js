@@ -62,6 +62,7 @@ router
 })
 
 .post('/login', (req, res) => {
+    console.log("login attempt", req.body);
     const { email, password } = req.body;
     const sql = 'SELECT * FROM utilisateurs WHERE email = ?'
     db.query(sql, [email], async (err, results) => {
@@ -70,6 +71,7 @@ router
             return res.status(400).send('Utilisateur non trouvé')
         }
         const user = results[0]
+    
         const isMatch = await bcrypt.compare(password, user.mot_de_passe)
         if (!isMatch) {
             return res.status(400).send('Mot de passe incorrect')
