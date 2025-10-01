@@ -1,17 +1,24 @@
 import React, { useEffect, useState } from 'react';
 import { formatDateFR } from '../utils/date';
-import daysjs from 'dayjs';
+import { useNavigate } from 'react-router-dom';
 const base = import.meta.env.VITE_BASE_URL || '/';
 
 const EmpruntsList = () => {
   const [emprunts, setEmprunts] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
+    fetch(base + 'api/session', { credentials: 'include' }).then((res) => {
+      if (res.status !== 200) {
+        navigate('/login', { state: { flash: 'Veuillez vous connecter.' } });
+      }
+    });
+
     fetch(base + 'api/emprunts', { credentials: 'include' })
       .then((res) => res.json())
       .then((data) => setEmprunts(data))
       .catch(() => setEmprunts([]));
-  }, []);
+  }, [navigate]);
 
   const handleRetour = (id_emprunt) => {
     fetch(base + 'api/emprunts/retour', {

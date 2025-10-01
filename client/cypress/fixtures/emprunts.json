@@ -1,0 +1,10 @@
+[
+  {
+    "id_emprunt": 1,
+    "titre": "PHP et MySql pour les Nuls",
+    "date_emprunt": "2025-10-01",
+    "date_retour_prevue": "2025-10-04",
+    "date_retour_effective": null,
+    "message": ""
+  }
+]
