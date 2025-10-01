@@ -47,7 +47,6 @@ const BookList = () => {
       return alert('Veuillez choisir une date de retour prévue.');
 
     const csrfToken = await getCsrfToken();
-    console.log('CSRF Token:', csrfToken);
 
     fetch(base + 'api/emprunts', {
       method: 'POST',

@@ -15,7 +15,6 @@ const Sidebar = ({ userT }) => {
         else throw new Error('Account not found');
       })
       .then((data) => {
-        console.log(data);
         setUser(data.user);
       })
       .catch((error) => setUser(null));
@@ -42,7 +41,7 @@ const Sidebar = ({ userT }) => {
       credentials: 'include',
     }).then(() => {
       setUser(null);
-      //   window.location.href = '/';
+      window.location.href = '/';
     });
   };
 

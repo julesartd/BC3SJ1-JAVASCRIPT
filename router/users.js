@@ -22,7 +22,6 @@ router
 
   .post('/register', async (req, res) => {
     const { name, prenom, email, password, role } = req.body;
-    console.log(req.body);
     const hashedPassword = await bcrypt.hash(password, 10);
     const sql =
       'INSERT INTO utilisateurs (nom, prenom, email, mot_de_passe, role) VALUES (?, ?, ?, ?, ?)';
@@ -54,7 +53,6 @@ router
   })
 
   .post('/login', (req, res) => {
-    console.log('login attempt', req.body);
     const { email, password } = req.body;
     const sql = 'SELECT * FROM utilisateurs WHERE email = ?';
     db.query(sql, [email], async (err, results) => {
