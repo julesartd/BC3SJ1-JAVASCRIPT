@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { formatDateFR } from '../utils/date';
 import { useNavigate } from 'react-router-dom';
 const base = import.meta.env.VITE_BASE_URL || '/';
@@ -6,6 +6,7 @@ const base = import.meta.env.VITE_BASE_URL || '/';
 const EmpruntsList = () => {
   const [emprunts, setEmprunts] = useState([]);
   const navigate = useNavigate();
+  const [refresh, setRefresh] = useState(0);
 
   useEffect(() => {
     fetch(base + 'api/session', { credentials: 'include' }).then((res) => {
@@ -13,12 +14,14 @@ const EmpruntsList = () => {
         navigate('/login', { state: { flash: 'Veuillez vous connecter.' } });
       }
     });
+  }, [navigate]);
 
+  useEffect(() => {
     fetch(base + 'api/emprunts', { credentials: 'include' })
       .then((res) => res.json())
       .then((data) => setEmprunts(data))
       .catch(() => setEmprunts([]));
-  }, [navigate]);
+  }, [refresh]);
 
   const handleRetour = (id_emprunt) => {
     fetch(base + 'api/emprunts/retour', {
@@ -30,9 +33,7 @@ const EmpruntsList = () => {
       .then((res) => res.json())
       .then((data) => {
         alert(data.message);
-        fetch(base + 'api/emprunts', { credentials: 'include' })
-          .then((res) => res.json())
-          .then((data) => setEmprunts(data));
+        setRefresh((r) => r + 1);
       });
   };
 
