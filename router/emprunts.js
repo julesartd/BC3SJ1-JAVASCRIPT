@@ -1,21 +1,10 @@
 const express = require('express');
 const router = express.Router();
-const jwt = require('jsonwebtoken');
 const db = require('../services/database');
-const JWT_SECRET = process.env.JWT_SECRET;
+const { authenticateToken } = require('../middlewares/auth.middleware');
+const { verifyCsrfToken } = require('../middlewares/csrf.middleware');
 
-function authenticateToken(req, res, next) {
-  const token = req.cookies.token;
-  if (!token) return res.sendStatus(401);
-
-  jwt.verify(token, JWT_SECRET, (err, user) => {
-    if (err) return res.sendStatus(403);
-    req.user = user;
-    next();
-  });
-}
-
-router.post('/', authenticateToken, (req, res) => {
+router.post('/', verifyCsrfToken, authenticateToken, (req, res) => {
   const { id_livre, date_retour_prevue } = req.body;
   const id_utilisateur = req.user.id;
 

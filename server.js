@@ -11,28 +11,15 @@ const db = require('./services/database');
 require('./cron/empruntReminder');
 require('dotenv').config();
 
-const JWT_SECRET = process.env.JWT_SECRET;
-function authenticateToken(req, res, next) {
-  const token = req.cookies.token;
-  if (!token) return res.sendStatus(401);
-
-  jwt.verify(token, JWT_SECRET, (err, user) => {
-    if (err) return res.sendStatus(403);
-    req.user = user;
-    next();
-  });
-}
-const corsOptions = {
-  // origin: 'https://exam.andragogy.fr',
-  origin: 'http://localhost:5173',
-  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
-  credentials: true,
-  optionsSuccessStatus: 204,
-};
-
+const { authenticateToken } = require('./middlewares/auth.middleware');
+const corsOptions = require('./middlewares/cors.middleware');
+const {
+  generateCsrfToken,
+  verifyCsrfToken,
+} = require('./middlewares/csrf.middleware');
 const router = express.Router();
 router.use(bodyParser.json());
-router.use(cors(corsOptions));
+router.use(corsOptions);
 router.use(cookieParser());
 router.use('/api/books', booksrouter);
 router.use('/api/users', usersRouter);
@@ -50,6 +37,10 @@ router.get('/api/session', authenticateToken, (req, res) => {
   } else {
     res.status(401).json({ message: 'Non authentifié' });
   }
+});
+
+router.get('/api/csrf-token', generateCsrfToken, (req, res) => {
+  res.json({ csrfToken: req.cookies.csrfToken });
 });
 
 router.get('/api/statistics', (req, res) => {

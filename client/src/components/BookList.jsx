@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { getCsrfToken } from '../utils/csrf';
 import './../styles/booklist.css';
 
 const ROLES = ['utilisateur', 'admin'];
@@ -25,7 +26,7 @@ const BookList = () => {
       })
       .then((data) => setUserRole(data.user.role || ROLES[0]))
       .catch((error) => setUserRole(null));
-  });
+  }, []);
 
   const handleAddBook = () => {
     navigate('/add_book');
@@ -41,13 +42,20 @@ const BookList = () => {
     setDateRetourPrevue('');
   };
 
-  const submitEmprunt = () => {
+  const submitEmprunt = async () => {
     if (!dateRetourPrevue)
       return alert('Veuillez choisir une date de retour prévue.');
+
+    const csrfToken = await getCsrfToken();
+    console.log('CSRF Token:', csrfToken);
+
     fetch(base + 'api/emprunts', {
       method: 'POST',
       credentials: 'include',
-      headers: { 'Content-Type': 'application/json' },
+      headers: {
+        'Content-Type': 'application/json',
+        'x-csrf-token': csrfToken,
+      },
       body: JSON.stringify({
         id_livre: selectedBookId,
         date_retour_prevue: dateRetourPrevue,

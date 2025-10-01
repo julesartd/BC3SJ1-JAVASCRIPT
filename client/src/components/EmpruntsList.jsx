@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { formatDateFR } from '../utils/date';
 import { useNavigate } from 'react-router-dom';
 const base = import.meta.env.VITE_BASE_URL || '/';
+import { getCsrfToken } from '../utils/csrf';
 
 const EmpruntsList = () => {
   const [emprunts, setEmprunts] = useState([]);
@@ -23,11 +24,15 @@ const EmpruntsList = () => {
       .catch(() => setEmprunts([]));
   }, [refresh]);
 
-  const handleRetour = (id_emprunt) => {
+  const handleRetour = async (id_emprunt) => {
+    const csrfToken = await getCsrfToken();
     fetch(base + 'api/emprunts/retour', {
       method: 'POST',
       credentials: 'include',
-      headers: { 'Content-Type': 'application/json' },
+      headers: {
+        'Content-Type': 'application/json',
+        'x-csrf-token': csrfToken,
+      },
       body: JSON.stringify({ id_emprunt }),
     })
       .then((res) => res.json())
